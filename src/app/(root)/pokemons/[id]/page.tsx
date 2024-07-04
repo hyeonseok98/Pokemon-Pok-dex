@@ -1,3 +1,4 @@
+import { fetchPokemonDetailData } from "@/apis/pokemons";
 import { Pokemon } from "@/types/pokemon.type";
 import {
   formatHeight,
@@ -6,20 +7,30 @@ import {
 } from "@/utils/formatPokemonInfo";
 import Image from "next/image";
 import Link from "next/link";
+import generateMetadata from "./../../_components/PokemonMetaData/PokemonMetaData";
+import NotFoundDetailPage from "./not-found";
 
-const PokemonDetailPage = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
-  const res = await fetch(`http://localhost:3000/api/pokemons/${id}`);
-  if (!res.ok) {
-    return <p>Failed to load data</p>;
+export { generateMetadata };
+
+const PokemonDetailPage = async ({
+  params: { id },
+}: {
+  params: { id: string };
+}) => {
+  if (+id > 151) {
+    return <NotFoundDetailPage />;
   }
-  const pokemon: Pokemon = await res.json();
+
+  const pokemon: Pokemon = await fetchPokemonDetailData(id);
+  if (!pokemon) {
+    return <p className="text-white">포켓몬 데이터를 가져오지 못했습니다.</p>;
+  }
 
   return (
     <section className="flex flex-col w-[520px] mx-auto">
       <div className="flex flex-col justify-center items-center w-full h-20 p-4 rounded-t-lg bg-slate-100 text-black">
         <h2 className="text-xl font-bold">{pokemon.korean_name}</h2>
-        <span>NO. {formatPokemonId(pokemon.id)}</span>
+        <h2>NO. {formatPokemonId(pokemon.id)}</h2>
       </div>
 
       <div className="flex flex-col justify-center items-center w-full h-auto p-4 rounded-b-lg bg-white text-black leading-7 mb-6">

@@ -2,16 +2,33 @@
 
 import { fetchPokemonData } from "@/apis/pokemons";
 import { Pokemon } from "@/types/pokemon.type";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import PokemonDetail from "./PokemonDetail";
 
+// 서버컴포넌트 실험시 async 붙이기!
 function PokemonList() {
-  const { data: pokemonData, isLoading } = useQuery<Pokemon[]>({
+  const { data: pokemonData } = useSuspenseQuery<Pokemon[]>({
     queryKey: ["pokemons"],
     queryFn: fetchPokemonData,
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 2,
   });
+
+  // 서버 컴포넌트 실험
+  // const baseUrl = "http://localhost:3000";
+
+  // const fetchPokemonData = async () => {
+  //   const response = await fetch(`${baseUrl}/api/pokemons/`);
+  //   const data: Pokemon[] = await response.json();
+
+  //   return data;
+  // };
+
+  // const pokemonData = await fetchPokemonData();
+
+  // if (isLoading) {
+  //   throw new Promise(() => {});
+  // }
 
   // if (isLoading) {
   //   return (

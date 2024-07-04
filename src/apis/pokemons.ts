@@ -9,9 +9,9 @@ export const fetchPokemonData = async () => {
   return data;
 };
 
-export const fetchPokemonDetailData = async (id: string) => {
+export const fetchPokemonDetailData = async (id: string): Promise<Pokemon> => {
   const response = await fetch(`${baseUrl}/api/pokemons/${id}`);
-  const data: Pokemon[] = await response.json();
+  const data: Pokemon = await response.json();
 
   return data;
 };
