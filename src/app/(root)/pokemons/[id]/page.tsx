@@ -36,7 +36,7 @@ const PokemonDetailPage = async ({ params }: { params: { id: string } }) => {
           <span>무게: {formatWeight(pokemon.weight)}</span>
         </div>
         <div className="flex gap-x-1">
-          <span className="font-semibold">타입:</span>
+          <span className="font-semibold">타입: </span>
           {pokemon.types.map((typeList, index) => (
             <div
               key={index}

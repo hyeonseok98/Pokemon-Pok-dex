@@ -1,5 +1,8 @@
 // 포켓몬 ID를 4자리로 설정
-export const formatPokemonId = (id: number): string => {
+export const formatPokemonId = (id: number | undefined): string => {
+  if (id === undefined) {
+    return "id 정보 없음";
+  }
   return id.toString().padStart(4, "0");
 };
 

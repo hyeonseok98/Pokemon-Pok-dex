@@ -7,6 +7,10 @@ type PokemonDetailProps = {
 };
 
 const PokemonDetail: React.FC<PokemonDetailProps> = ({ pokemon }) => {
+  if (!pokemon) {
+    return "포켓몬 정보에 오류가 있습니다.";
+  }
+
   return (
     <div className="group flex flex-col justify-center items-start border border-gray-400 rounded-lg px-4 py-2.5 hover:border-white hover:cursor-pointer hover:scale-[1.03] transition-transform duration-200 ease-in-out">
       <div className="w-full flex justify-center mb-1.5">
